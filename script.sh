@@ -14,6 +14,12 @@
 
 source .env
 
+if ! command -v bw 2>&1 > /dev/null
+then
+  echo "bw command is required"
+  exit 1
+fi
+
 check_source_args() {
   if [ -z "$BW_SOURCE_INSTANCE" ]; then
     echo "Variable BW_SOURCE_INSTANCE is unset"
@@ -69,7 +75,6 @@ login_to_instance() {
 
   bw logout
   bw config server $instance
-  set -x
   BW_CLIENTID=$clientid BW_CLIENTSECRET=$secret bw login --apikey
   export BW_SESSION=$(bw unlock $password --raw)
 }
