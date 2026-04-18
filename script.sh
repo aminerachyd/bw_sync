@@ -74,7 +74,11 @@ login_to_instance() {
   echo
 
   bw logout
+  echo -n "Configuring server $instance"
+  echo
   bw config server $instance
+  echo -n "Logging in using $clientid and $secret"
+  echo
   BW_CLIENTID=$clientid BW_CLIENTSECRET=$secret bw login --apikey
   export BW_SESSION=$(bw unlock $password --raw)
 }
